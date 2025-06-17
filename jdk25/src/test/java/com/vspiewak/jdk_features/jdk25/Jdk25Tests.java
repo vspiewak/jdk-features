@@ -6,6 +6,8 @@ import sun.misc.Unsafe;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.stream.Gatherers;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -42,7 +44,36 @@ class Jdk25Tests {
     }
 
     // JEP 485: Stream Gatherers
-    //FIXME
+    @Test
+    void canUseStreamGatherers() {
+
+        // fixed window
+        var s1 = Stream.of(1, 2, 3, 4, 5)
+                .gather(Gatherers.windowFixed(3))
+                .toList();
+
+        assertThat(s1.get(0)).isEqualTo(List.of(1, 2, 3));
+        assertThat(s1.get(1)).isEqualTo(List.of(4, 5));
+
+        // window sliding
+        var s2 = Stream.of(1, 2, 3, 4, 5)
+                .gather(Gatherers.windowSliding(3))
+                .toList();
+
+        assertThat(s2.get(0)).isEqualTo(List.of(1, 2, 3));
+        assertThat(s2.get(1)).isEqualTo(List.of(2, 3, 4));
+        assertThat(s2.get(2)).isEqualTo(List.of(3, 4, 5));
+
+        // fold
+        var s3 = Stream.of(1, 2, 3, 4, 5)
+                .gather(Gatherers.fold(
+                        () -> 0,
+                        (acc, n) -> acc + n
+                )).toList();
+
+        assertThat(s3).isEqualTo(List.of(15));
+
+    }
 
 
     // JEP 486: Permanently Disable the Security Manager
