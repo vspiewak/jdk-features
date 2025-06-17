@@ -23,7 +23,7 @@ class Jdk11Tests {
 
     // JEP 181: Nest-Based Access Control
     @Test
-    void nestBasedAccessControl() {
+    void canUseNestBasedAccessControl() {
         class Outer {
             private final String secret = "s";
 
@@ -38,28 +38,28 @@ class Jdk11Tests {
 
     // JEP 323: Local-Variable Syntax for Lambda Parameters
     @Test
-    void localVarSyntaxInLambda() {
+    void canUseLocalVarSyntaxInLambda() {
         BiFunction<String, String, String> concat = (var a, var b) -> a + b;
         assertThat(concat.apply("foo", "bar")).isEqualTo("foobar");
     }
 
     // JEP 321: HTTP Client (Standard)
     @Test
-    void httpClientStandardApi() {
+    void canUseHttpClientStandardApi() {
         HttpClient client = HttpClient.newHttpClient();
         assertThat(client).isNotNull();
     }
 
     // JEP 327: Unicode 10
     @Test
-    void unicode10CodePointSupported() {
+    void canUseUnicode10() {
         int faceWithMonocle = 0x1F9D0; // U+1F9D0 “Face with Monocle” added in Unicode 10
         assertThat(Character.isValidCodePoint(faceWithMonocle)).isTrue();
     }
 
     // JEP 328: Flight Recorder
     @Test
-    void flightRecorderApiWorks() throws Exception {
+    void canUseFlightRecorderApi() throws Exception {
         Recording r = new Recording();
         r.start();
         r.stop();
@@ -69,14 +69,14 @@ class Jdk11Tests {
 
     // JEP 329: ChaCha20 and Poly1305 Cryptographic Algorithms
     @Test
-    void chacha20Poly1305CipherAvailable() throws Exception {
+    void canUseChaCha20Poly1305Cipher() throws Exception {
         Cipher cipher = Cipher.getInstance("ChaCha20-Poly1305");
         assertThat(cipher.getAlgorithm()).isEqualTo("ChaCha20-Poly1305");
     }
 
     // JEP 332: TLS 1.3
     @Test
-    void tls13IsSupportedByDefault() throws Exception {
+    void canUseTls13ByDefault() throws Exception {
         SSLContext ctx = SSLContext.getDefault();
         String[] protocols = ctx.getSupportedSSLParameters().getProtocols();
         assertThat(Arrays.asList(protocols)).contains("TLSv1.3");

@@ -34,7 +34,7 @@ class Jdk9Tests {
     }
 
     @Test
-    void tryWithResourcesEffectivelyFinal() {
+    void canUseTryWithResourcesEffectivelyFinal() {
         class MyRes implements AutoCloseable {
             boolean closed = false;
 
@@ -59,7 +59,7 @@ class Jdk9Tests {
     }
 
     @Test
-    void privateInterfaceMethod() {
+    void canUsePrivateInterfaceMethod() {
 
         WithPriv wp = new WithPriv() {
         };
@@ -67,7 +67,7 @@ class Jdk9Tests {
     }
 
     @Test
-    void collectionFactories() {
+    void canUseCollectionFactories() {
         List<String> list = List.of("a", "b");
         Set<Integer> set = Set.of(1, 2);
         Map<String, Integer> m1 = Map.of("x", 1, "y", 2);
@@ -79,14 +79,14 @@ class Jdk9Tests {
     }
 
     @Test
-    void processHandle() {
+    void canUseProcessHandle() {
         ProcessHandle self = ProcessHandle.current();
         assertThat(self.isAlive()).isTrue();
         assertThat(self.pid()).isGreaterThan(0);
     }
 
     @Test
-    void flowSubmissionPublisher() throws InterruptedException {
+    void canUseFlowSubmissionPublisher() throws InterruptedException {
         SubmissionPublisher<String> pub = new SubmissionPublisher<>();
         List<String> received = new ArrayList<>();
         CountDownLatch latch = new CountDownLatch(3);
@@ -125,7 +125,7 @@ class Jdk9Tests {
     }
 
     @Test
-    void varHandleArray() {
+    void canUseVarHandleArray() {
         VarHandle vh = MethodHandles.arrayElementVarHandle(int[].class);
         int[] arr = {10, 20, 30};
         vh.set(arr, 1, 99);
@@ -135,7 +135,7 @@ class Jdk9Tests {
     }
 
     @Test
-    void systemLogger() {
+    void canUseSystemLogger() {
         System.Logger log = System.getLogger("Tst");
         log.log(System.Logger.Level.INFO, "hello from JDK9 logger");
 

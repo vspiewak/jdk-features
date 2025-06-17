@@ -14,21 +14,21 @@ class Jdk17Tests {
 
     // Java 12: Compact Number Formatting
     @Test
-    void testCompactNumberFormatting() {
+    void canUseCompactNumberFormatting() {
         NumberFormat fmt = NumberFormat.getCompactNumberInstance(Locale.US, NumberFormat.Style.SHORT);
         assertThat(fmt.format(1_200_000)).isEqualTo("1M");
     }
 
     // Java 12: Unicode 11.0 support (e.g., checking a supplementary character)
     @Test
-    void testUnicodeSupport() {
+    void canUseUnicode11() {
         String reiwa = "\uD83C\uDFF4"; // Just testing that supplementary surrogate handling works
         assertThat(reiwa.codePointCount(0, reiwa.length())).isEqualTo(1);
     }
 
     // Java 14: Switch Expressions
     @Test
-    void testSwitchExpression() {
+    void canUseSwitchExpression() {
         int month = 4;
         String quarter = switch (month) {
             case 1, 2, 3 -> "Q1";
@@ -44,7 +44,7 @@ class Jdk17Tests {
 
     // Java 15: Text Blocks
     @Test
-    void testTextBlocks() {
+    void canUseTextBlocks() {
         String json = """
                 {
                   "name": "Alice",
@@ -56,7 +56,7 @@ class Jdk17Tests {
 
     // Java 16: Pattern Matching for instanceof
     @Test
-    void testPatternMatchingInstanceof() {
+    void canUsePatternMatchingInstanceof() {
         Object obj = "Hello World";
         if (obj instanceof String s) {
             assertThat(s).startsWith("Hello");
@@ -67,12 +67,13 @@ class Jdk17Tests {
 
     // Java 16: Records
     @Test
-    void testRecordEquals() {
+    void canUseRecords() {
         record Person(String name, int age) {
         }
 
         Person p1 = new Person("Bob", 25);
         Person p2 = new Person("Bob", 25);
+
         assertThat(p1).isEqualTo(p2);
         assertThat(p1.name()).isEqualTo("Bob");
         assertThat(p1.age()).isEqualTo(25);
@@ -80,7 +81,7 @@ class Jdk17Tests {
 
     // Java 17: Sealed Classes
     @Test
-    void testSealedClasses() {
+    void canUseSealedClasses() {
         Vehicle car = new ElectricCar("Tesla");
         assertThat(car).isInstanceOf(ElectricCar.class);
         assertThat(car.name()).isEqualTo("Tesla");
@@ -88,7 +89,7 @@ class Jdk17Tests {
 
     // Java 17: Enhanced Pseudo-Random Number Generators
     @Test
-    void testEnhancedPRNG() {
+    void canUseEnhancedPRNG() {
         RandomGenerator rng = RandomGeneratorFactory.of("L128X1024MixRandom").create();
         int val = rng.nextInt(100);
         assertThat(val).isBetween(0, 99);
